@@ -60,13 +60,15 @@ SELECT dog_guid, breed
 FROM dogs
 WHERE breed='golden retriever'; #MySQL accepts both double and single quotation marks
 
-# look at all the data from Golden Retrievers and Poodles, you could certainly use the OR operator, but the IN operator would be even more efficient 
+# look at all the data from Golden Retrievers and Poodles, you could certainly use the OR operator, 
+but the IN operator would be even more efficient 
 %%sql
 SELECT dog_guid, breed
 FROM dogs
 WHERE breed IN ("golden retriever","poodle");
 
-#The LIKE operator allows you to specify a pattern that the textual data you query has to match. For example, if you wanted to look at all the data from breeds whose names started with "s"
+#The LIKE operator allows you to specify a pattern that the textual data you query has to match. 
+For example, if you wanted to look at all the data from breeds whose names started with "s"
 %%sql
 SELECT dog_guid, breed
 FROM dogs
@@ -109,7 +111,9 @@ SELECT dog_guid, created_at
 FROM complete_tests
 WHERE created_at<'2015-10-15';
 ```
+
 ## step 5 using WHERE in combination with IS NULL and IS NOT NULL
+
 ```python
 # select only the rows that have non-null data
 SELECT user_guid
@@ -126,7 +130,6 @@ WHERE free_start_user IS NULL;
 SELECT user_guid
 FROM users
 WHERE state IS NOT NULL;
-```
 
 # retrieve the Dog ID, subcategory_name, and test_name fields, in that order, 
 of the first 10 reviews entered in the Reviews table to be submitted in 2014?
