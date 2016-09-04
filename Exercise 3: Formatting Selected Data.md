@@ -40,13 +40,13 @@ FROM dogs;
 SELECT DISTINCT state, city
 FROM users;
 # If you examine the query output carefully, you will see that there are many rows with California (CA) 
-in the state column and four rows that have Gainesville in the city column (Georgia, Arkansas, Florida, 
-and Virginia all have cities named Gainesville in our user table), 
-but no two rows have the same state and city combination.
+# in the state column and four rows that have Gainesville in the city column (Georgia, Arkansas, Florida, 
+# and Virginia all have cities named Gainesville in our user table), 
+# but no two rows have the same state and city combination.
 
-#When you use the DISTINCT clause with the LIMIT clause in a statement, 
-MySQL stops searching when it finds the number of unique rows specified in the LIMIT clause, 
-not when it goes through the number of rows in the LIMIT clause.
+# When you use the DISTINCT clause with the LIMIT clause in a statement, 
+# MySQL stops searching when it finds the number of unique rows specified in the LIMIT clause, 
+# not when it goes through the number of rows in the LIMIT clause.
 
 # the first 5 different breeds, not the distinct breeds in the first 5 rows
 SELECT DISTINCT breed
@@ -61,7 +61,7 @@ FROM complete_tests;
 ## step 3: Use ORDER BY to sort the output of your query
 ```python
 # select the breeds of dogs in the dog table sorted in alphabetical order
-The default order is ASC.
+# The default order is ASC.
 SELECT DISTINCT breed
 FROM dogs 
 ORDER BY breed
@@ -78,7 +78,7 @@ ORDER BY median_ITI_minutes
 LIMIT 5
 
 #  select the User IDs and Dog IDs of the 5 customer-dog pairs 
-who spent the least median amount of time between their Dognition tests
+# who spent the least median amount of time between their Dognition tests
 SELECT DISTINCT user_guid, median_ITI_minutes
 FROM dogs 
 ORDER BY median_ITI_minutes
@@ -98,7 +98,7 @@ ORDER BY created_at
 LIMIT 10
 
 # select all the distinct User IDs of customers in the United States (abbreviated "US") 
-and sort them according to the states they live in in alphabetical order first  
+# and sort them according to the states they live in in alphabetical order first  
 SELECT DISTINCT user_guid, state, membership_type
 FROM users
 WHERE country="US"
@@ -115,7 +115,6 @@ ORDER BY state ASC, membership_type ASC
 SELECT DISTINCT subcategory_name
 FROM complete_tests
 ORDER BY subcategory_name 
-
 ```
 
 ## step 4: Export your query results to a text file
@@ -129,8 +128,8 @@ non_us = %sql SELECT DISTINCT country FROM users where country != "US";
 non_us.csv('non_us.csv')
 
 # create a text file with a list of all the customers with yearly memberships 
-who live in the state of North Carolina (USA) and joined Dognition after March 1, 2014, 
-sorted so that the most recent member is at the top of the list.
+# who live in the state of North Carolina (USA) and joined Dognition after March 1, 2014, 
+# sorted so that the most recent member is at the top of the list.
 subusers=%sql 
 SELECT DISTINCT user_guid, state, created_at 
 FROM users 
