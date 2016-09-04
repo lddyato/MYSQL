@@ -1,3 +1,4 @@
+<table><tr><td bgcolor=#000000>
 # Exercise 3: Formatting Selected Data
 
 ```python
