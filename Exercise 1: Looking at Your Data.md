@@ -25,7 +25,7 @@ SHOW tables
 SHOW columns FROM (enter table name here)
 SHOW columns FROM (enter table name here) FROM (enter database name here)
 SHOW columns FROM databasename.tablename  #Whenever you have multiple databases loaded, you will need to specify which database a table comes from using one of the syntax options described above.
-DESCRIBE table name
+DESCRIBE users
 ```
 + **Empty**: the column either is not indexed or is indexed only as a secondary column in a multiple-column, nonunique index.
 + **PRI**: the column is a PRIMARY KEY or is one of the columns in a multiple-column PRIMARY KEY.
@@ -683,25 +683,19 @@ SELECT breed FROM dogs LIMIT 5, 10;
 
 ```sql
 # query with different orders of the column names to observe the differences in output 
-SELECT breed,breed_type,breed_group
-FROM dogs LIMIT 5,10;
+SELECT breed,breed_type,breed_group FROM dogs LIMIT 5,10;
 
 # using the wild card to query the reviews table
-SELECT *
-FROM reviews LIMIT 5,10;
+SELECT * FROM reviews LIMIT 5,10;
 
 # SELECT statements can also be used to make new derivations of individual columns using "+" for addition, "-" for subtraction, "*" for multiplication, or "/" for division.   
-SELECT median_iti_minutes / 60
-FROM dogs LIMIT 5, 10;
+SELECT median_iti_minutes / 60 FROM dogs LIMIT 5, 10;
 
 # retrieve the first 15 rows of data from the dog_guid, subcategory_name, and test_name fields of the Reviews table
-SELECT dog_guid, subcategory_name, test_name
-FROM reviews LIMIT 15;
+SELECT dog_guid, subcategory_name, test_name FROM reviews LIMIT 15;
 
 # retrieve 10 rows of data from the activity_type, created_at, and updated_at fields of the site_activities table, starting at row 50
-SELECT activity_type, created_at, updated_at
-FROM site_activities 
-LIMIT 49,10;
+SELECT activity_type, created_at, updated_at FROM site_activities LIMIT 49,10;
 
 # retrieve 20 rows of data from all the columns in the users table, starting from row 2000
 SELECT *
