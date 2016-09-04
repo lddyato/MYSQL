@@ -70,13 +70,10 @@ ORDER BY breed
 SELECT DISTINCT breed
 FROM dogs 
 ORDER BY breed DESC
+```
+Combining ORDER BY with LIMIT gives you an easy way to select the "top 10" and "last 10" in a list or column
 
-# Combining ORDER BY with LIMIT gives you an easy way to select the "top 10" and "last 10" in a list or column
-SELECT DISTINCT user_guid, median_ITI_minutes
-FROM dogs 
-ORDER BY median_ITI_minutes
-LIMIT 5
-
+```python
 #  select the User IDs and Dog IDs of the 5 customer-dog pairs 
 # who spent the least median amount of time between their Dognition tests
 SELECT DISTINCT user_guid, median_ITI_minutes
