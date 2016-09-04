@@ -151,7 +151,7 @@ ORDER BY created_at DESC;
 Returns the string str with all occurrences of the string from_str replaced by the string to_str. 
 REPLACE() performs a case-sensitive match when searching for from_str.
 * **TRIM()** returns a string after removing all prefixes or suffixes from the given string.
- + Syntax: `TRIM([{BOTH | LEADING | TRAILING} [remstr] FROM ] str)`
+ + **Syntax**: `TRIM([{BOTH | LEADING | TRAILING} [remstr] FROM ] str)`
  + **BOTH**: 	Indicates that prefixes from both left and right are to be removed.
  + **LEADING**: Indicates that only leading prefixes are to be removed.
  + **TRAILING**: Indicates that only trailing prefixes are to be removed.
