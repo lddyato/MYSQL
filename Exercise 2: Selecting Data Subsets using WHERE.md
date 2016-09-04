@@ -6,7 +6,7 @@
 %sql USE dognitiondb
 ```
 
-## step 1 using WHERE to meet certain criteria =,<,>,<=, and >=
+## step 1: =,<,>,<=, >=, !=, <>
 ```python
 #  know which Dognition customers received access to Dognition's first four tests for free. These customers have a 1 in the "free_start_user" column of the users table
 %sql 
@@ -21,7 +21,7 @@ FROM dogs
 WHERE dna_tested=1;
 ```
 
-## step 2 BETWEEN & AND, OR, IS NOT, !=, <>
+## step 2: BETWEEN & AND, OR
 ```python
 # select the Dog IDs of dogs who weighed between 10 and 50 pounds
 %%sql
@@ -48,7 +48,7 @@ FROM users
 WHERE membership_type=2;
 ```
 
-## step 3 using where to interact with text data "strings" **IN**, **LIKE**
+## step 3: using WHERE to interact with text data "strings" **IN**, **LIKE**
 * WHERE breed LIKE ("s%") = the breed must start with "s", but can have any number of letters after the "s"
 * WHERE breed LIKE ("%s") = the breed must end with "s", but can have any number of letters before the "s"
 * WHERE breed LIKE ("%s%") = the breed must contain an "s" somewhere in its name, but can have any number of letters before or after the "s"
@@ -79,9 +79,15 @@ WHERE breed LIKE ("s%");
 SELECT *
 FROM users
 WHERE state IN ("NC","NY");
+
+# select all of the User IDs of customers who have female dogs whose breed includes the word "terrier" somewhere in its name 
+%%sql
+SELECT user_guid, gender, breed
+FROM dogs
+WHERE gender='female' AND breed LIKE ("%terrier%");
 ```
 
-## step 4 using WHERE to interact with datetime data
+## step 4: using WHERE to interact with datetime data
 * DATE - format YYYY-MM-DD
 * DATETIME - format: YYYY-MM-DD HH:MI:SS
 * TIMESTAMP - format: YYYY-MM-DD HH:MI:SS
@@ -110,9 +116,25 @@ WHERE created_at > '2014-02-04'
 SELECT dog_guid, created_at
 FROM complete_tests
 WHERE created_at<'2015-10-15';
+
+# retrieve the Dog ID, subcategory_name, and test_name fields, in that order, 
+of the first 10 reviews entered in the Reviews table to be submitted in 2014?
+%%sql
+SELECT dog_guid, subcategory_name, test_name
+FROM reviews
+WHERE YEAR(created_at)=2014
+LIMIT 10;
+
+
+# select the Dog ID, test name, and subcategory associated with each completed test for the first 100 tests entered in October, 2014?
+%%sql
+SELECT dog_guid, test_name, subcategory_name
+FROM complete_tests
+WHERE YEAR(created_at)="2014" and MONTH(created_at)=10
+LIMIT 100;
 ```
 
-## step 5 using WHERE in combination with IS NULL and IS NOT NULL
+## step 5: IS NULL and IS NOT NULL
 
 ```python
 # select only the rows that have non-null data
@@ -130,26 +152,4 @@ WHERE free_start_user IS NULL;
 SELECT user_guid
 FROM users
 WHERE state IS NOT NULL;
-
-# retrieve the Dog ID, subcategory_name, and test_name fields, in that order, 
-of the first 10 reviews entered in the Reviews table to be submitted in 2014?
-%%sql
-SELECT dog_guid, subcategory_name, test_name
-FROM reviews
-WHERE YEAR(created_at)=2014
-LIMIT 10;
-
-
-# select all of the User IDs of customers who have female dogs whose breed includes the word "terrier" somewhere in its name 
-%%sql
-SELECT user_guid, gender, breed
-FROM dogs
-WHERE gender='female' AND breed LIKE ("%terrier%");
-
-# select the Dog ID, test name, and subcategory associated with each completed test for the first 100 tests entered in October, 2014?
-%%sql
-SELECT dog_guid, test_name, subcategory_name
-FROM complete_tests
-WHERE YEAR(created_at)="2014" and MONTH(created_at)=10
-LIMIT 100;
 ```
