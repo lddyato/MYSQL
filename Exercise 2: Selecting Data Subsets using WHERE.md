@@ -8,12 +8,14 @@
 
 ## step 1: =,<,>,<=, >=, !=, <>
 ```sql
-#  know which Dognition customers received access to Dognition's first four tests for free. These customers have a 1 in the "free_start_user" column of the users table
+# know which Dognition customers received access to Dognition's first four tests for free. 
+# These customers have a 1 in the "free_start_user" column of the users table
 SELECT user_guid, free_start_user 
 FROM users 
 WHERE free_start_user=1;
 
-# select the Dog IDs for the dogs in the Dognition data set that were DNA tested (these should have a 1 in the dna_tested field of the dogs table
+# select the Dog IDs for the dogs in the Dognition data set that were DNA tested 
+# (these should have a 1 in the dna_tested field of the dogs table
 SELECT dog_guid, dna_tested 
 FROM dogs 
 WHERE dna_tested=1;
@@ -36,7 +38,8 @@ SELECT dog_guid, dog_fixed, dna_tested
 FROM dogs
 WHERE dog_fixed=1 AND dna_tested!=1
 
-# query the User IDs of customers who bought annual subscriptions, indicated by a "2" in the membership_type field of the users table
+# query the User IDs of customers who bought annual subscriptions, 
+# indicated by a "2" in the membership_type field of the users table
 SELECT user_guid
 FROM users
 WHERE membership_type=2;
@@ -65,12 +68,14 @@ SELECT dog_guid, breed
 FROM dogs
 WHERE breed LIKE ("s%");
 
-# query all the data from customers located in the state of North Carolina (abbreviated "NC") or New York (abbreviated "NY")? 
+# query all the data from customers located in the state of 
+# North Carolina (abbreviated "NC") or New York (abbreviated "NY")? 
 SELECT *
 FROM users
 WHERE state IN ("NC","NY");
 
-# select all of the User IDs of customers who have female dogs whose breed includes the word "terrier" somewhere in its name 
+# select all of the User IDs of customers who have female dogs whose breed 
+# includes the word "terrier" somewhere in its name 
 SELECT user_guid, gender, breed
 FROM dogs
 WHERE gender='female' AND breed LIKE ("%terrier%");
