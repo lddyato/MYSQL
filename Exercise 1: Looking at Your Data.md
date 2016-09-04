@@ -8,7 +8,7 @@
 ```
 
 ## step 2: get to know your data
-```python
+```sql
 %sql SHOW tables
 ```
 | Tables_in_dognitiondb|
@@ -21,7 +21,7 @@
 | users| 
 
 ## step 3: show how many columns in table
-```python
+```sql
 %sql SHOW columns FROM (enter table name here)
 %sql SHOW columns FROM (enter table name here) FROM (enter database name here)
 %sql SHOW columns FROM databasename.tablename #Whenever you have multiple databases loaded, you will need to specify which database a table comes from using one of the syntax options described above.
@@ -666,49 +666,43 @@
 + The semi-colon at the end of a query is only required when you have multiple separate queries saved in the same text file or editor. 
 
 ## step 4 Using SELECT to look at your raw data
-```python
-%%sql SELECT breed FROM dogs;
+```sql
+SELECT breed FROM dogs;
 ```
 ## step 5 Using LIMIT to restrict the number of rows
-```python
+```sql
 # you will only see the first 5 rows of data you select
-%sql SELECT breed FROM dogs LIMIT 5;
+SELECT breed FROM dogs LIMIT 5;
 # 10 rows of data will be returned, starting at Row 6.
-%sql SELECT breed FROM dogs LIMIT 10 OFFSET 5;
-%sql SELECT breed FROM dogs LIMIT 5, 10;
+SELECT breed FROM dogs LIMIT 10 OFFSET 5;
+SELECT breed FROM dogs LIMIT 5, 10;
 ```
 
 ## step 6 Using SELECT to query multiple columns
 
-```python
+```sql
 # query with different orders of the column names to observe the differences in output 
-%%sql
 SELECT breed,breed_type,breed_group
 FROM dogs LIMIT 5,10;
 
 # using the wild card to query the reviews table
-%%sql
 SELECT *
 FROM reviews LIMIT 5,10;
 
 # SELECT statements can also be used to make new derivations of individual columns using "+" for addition, "-" for subtraction, "*" for multiplication, or "/" for division.   
-%%sql
 SELECT median_iti_minutes / 60
 FROM dogs LIMIT 5, 10;
 
 # retrieve the first 15 rows of data from the dog_guid, subcategory_name, and test_name fields of the Reviews table
-%%sql
 SELECT dog_guid, subcategory_name, test_name
 FROM reviews LIMIT 15;
 
 # retrieve 10 rows of data from the activity_type, created_at, and updated_at fields of the site_activities table, starting at row 50
-%%sql
 SELECT activity_type, created_at, updated_at
 FROM site_activities 
 LIMIT 49,10;
 
 # retrieve 20 rows of data from all the columns in the users table, starting from row 2000
-%%sql
 SELECT *
 FROM users 
 LIMIT 1999,20;
