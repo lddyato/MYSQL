@@ -33,7 +33,7 @@
 + **Default**: the default value that is assigned to the field. The "Extra" field contains any additional information that is available about a given field in that table. 
 
 
-1. Table **dogs**
+**Table 1: dogs**
 <table>
     <tr>
         <th>Field</th>
@@ -213,7 +213,7 @@
     </tr>
 </table>
 
-2. DESCRIBE **reviews**
+**Table 2: reviews**
 
 <table>
     <tr>
@@ -282,7 +282,7 @@
     </tr>
 </table>
 
-3. DESCRIBE **complete_tests**
+**Table 3: complete_tests**
 <table>
     <tr>
         <th>Field</th>
@@ -341,7 +341,7 @@
         <td></td>
     </tr>
 </table>
-4.  SHOW columns FROM **site_activities**
+**Table 4: site_activities**
 <table>
     <tr>
         <th>Field</th>
@@ -441,7 +441,7 @@
     </tr>
 </table>
 
-## SHOW columns FROM **exam_answers**
+**Table 5: exam_answers**
 <table>
     <tr>
         <th>Field</th>
@@ -517,7 +517,7 @@
     </tr>
 </table>
 
-## DESCRIBE **users**
+**Table 6: users**
 <table>
     <tr>
         <th>Field</th>
@@ -658,12 +658,12 @@
 </table>
 
 ## Note
-+ SQL syntax and keywords are case insensitive.  I recommend that you always enter SQL keywords in upper case and table or column names in either lower case or their native format to make it easy to read and troubleshoot your code, but it is not a requirement to do so.  Table or column names are often case insensitive as well, but defaults may vary across database platforms so it's always a good idea to check.
++ SQL syntax and keywords are **case insensitive**.  
 + Table or column names with spaces in them need to be surrounded by quotation marks in SQL.  MySQL accepts both double and single quotation marks, but some database systems only accept single quotation marks.  In all database systems, if a table or column name contains an SQL keyword, the name must be enclosed in backticks instead of quotation marks.
-> ` 'the marks that surrounds this phrase are single quotation marks' `     
-> ` "the marks that surrounds this phrase are double quotation marks" `     
-> `` `the marks that surround this phrase are backticks` ``
-+ The semi-colon at the end of a query is only required when you have multiple separate queries saved in the same text file or editor.  That said, I recommend that you make it a habit to always include a semi-colon at the end of your queries.  
+ + ` 'the marks that surrounds this phrase are single quotation marks' `     
+ + ` "the marks that surrounds this phrase are double quotation marks" `     
+ + `` `the marks that surround this phrase are backticks` ``
++ The semi-colon at the end of a query is only required when you have multiple separate queries saved in the same text file or editor. 
 
 ## step 4 Using SELECT to look at your raw data
 ```python
