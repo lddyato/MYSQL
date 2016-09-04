@@ -164,3 +164,5 @@ SELECT DISTINCT UPPER(breed)
 FROM dogs
 ORDER BY breed 
 ```
+
+</td></tr></table>
