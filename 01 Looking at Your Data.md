@@ -33,7 +33,7 @@
 + **Default**: the default value that is assigned to the field. The "Extra" field contains any additional information that is available about a given field in that table. 
 
 
-1. SHOW columns FROM dogs
+1. Table **dogs**
 <table>
     <tr>
         <th>Field</th>
@@ -213,7 +213,7 @@
     </tr>
 </table>
 
-2. DESCRIBE reviews
+2. DESCRIBE **reviews**
 
 <table>
     <tr>
@@ -282,7 +282,7 @@
     </tr>
 </table>
 
-3. DESCRIBE complete_tests
+3. DESCRIBE **complete_tests**
 <table>
     <tr>
         <th>Field</th>
@@ -341,7 +341,7 @@
         <td></td>
     </tr>
 </table>
-4. %sql SHOW columns FROM site_activities
+4.  SHOW columns FROM **site_activities**
 <table>
     <tr>
         <th>Field</th>
@@ -441,7 +441,7 @@
     </tr>
 </table>
 
-5. %sql SHOW columns FROM exam_answers
+## SHOW columns FROM **exam_answers**
 <table>
     <tr>
         <th>Field</th>
@@ -517,7 +517,7 @@
     </tr>
 </table>
 
-6. %sql DESCRIBE users
+## DESCRIBE **users**
 <table>
     <tr>
         <th>Field</th>
@@ -657,7 +657,60 @@
     </tr>
 </table>
 
+## Note
++ SQL syntax and keywords are case insensitive.  I recommend that you always enter SQL keywords in upper case and table or column names in either lower case or their native format to make it easy to read and troubleshoot your code, but it is not a requirement to do so.  Table or column names are often case insensitive as well, but defaults may vary across database platforms so it's always a good idea to check.
++ Table or column names with spaces in them need to be surrounded by quotation marks in SQL.  MySQL accepts both double and single quotation marks, but some database systems only accept single quotation marks.  In all database systems, if a table or column name contains an SQL keyword, the name must be enclosed in backticks instead of quotation marks.
+> ` 'the marks that surrounds this phrase are single quotation marks' `     
+> ` "the marks that surrounds this phrase are double quotation marks" `     
+> `` `the marks that surround this phrase are backticks` ``
++ The semi-colon at the end of a query is only required when you have multiple separate queries saved in the same text file or editor.  That said, I recommend that you make it a habit to always include a semi-colon at the end of your queries.  
 
+## step 4 Using SELECT to look at your raw data
+```python
+%%sql SELECT breed FROM dogs;
+```
+## step 5 Using LIMIT to restrict the number of rows
+```python
+# you will only see the first 5 rows of data you select
+%sql SELECT breed FROM dogs LIMIT 5;
+# 10 rows of data will be returned, starting at Row 6.
+%sql SELECT breed FROM dogs LIMIT 10 OFFSET 5;
+%sql SELECT breed FROM dogs LIMIT 5, 10;
+```
 
+## step 6 Using SELECT to query multiple columns
 
+```python
+# query with different orders of the column names to observe the differences in output 
+%%sql
+SELECT breed,breed_type,breed_group
+FROM dogs LIMIT 5,10;
 
+# using the wild card to query the reviews table
+%%sql
+SELECT *
+FROM reviews LIMIT 5,10;
+
+# SELECT statements can also be used to make new derivations of individual columns using "+" for addition, "-" for subtraction, "*" for multiplication, or "/" for division.   
+%%sql
+SELECT median_iti_minutes / 60
+FROM dogs LIMIT 5, 10;
+
+# retrieve the first 15 rows of data from the dog_guid, subcategory_name, and test_name fields of the Reviews table
+%%sql
+SELECT dog_guid, subcategory_name, test_name
+FROM reviews LIMIT 15;
+
+# retrieve 10 rows of data from the activity_type, created_at, and updated_at fields of the site_activities table, starting at row 50
+%%sql
+SELECT activity_type, created_at, updated_at
+FROM site_activities 
+LIMIT 49,10;
+
+# retrieve 20 rows of data from all the columns in the users table, starting from row 2000
+%%sql
+SELECT *
+FROM users 
+LIMIT 1999,20;
+FROM site_activities LIMIT 49,10;
+```
