@@ -24,7 +24,13 @@ SHOW tables
 ```sql
 SHOW columns FROM (enter table name here)
 SHOW columns FROM (enter table name here) FROM (enter database name here)
-SHOW columns FROM databasename.tablename  #Whenever you have multiple databases loaded, you will need to specify which database a table comes from using one of the syntax options described above.
+SHOW columns FROM databasename.tablename  
+#Whenever you have multiple databases loaded, you will need to specify which database a table comes from using one of the syntax options described above.
+SHOW columns FROM dogs
+DESCRIBE reviews
+DESCRIBE complete_tests
+DESCRIBE exam_answers
+DESCRIBE site_activities
 DESCRIBE users
 ```
 + **Empty**: the column either is not indexed or is indexed only as a secondary column in a multiple-column, nonunique index.
