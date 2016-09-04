@@ -26,15 +26,14 @@
 %sql SHOW columns FROM (enter table name here) FROM (enter database name here)
 %sql SHOW columns FROM databasename.tablename #Whenever you have multiple databases loaded, you will need to specify which database a table comes from using one of the syntax options described above.
 ```
-+ Empty: the column either is not indexed or is indexed only as a secondary column in a multiple-column, nonunique index.
-+ PRI: the column is a PRIMARY KEY or is one of the columns in a multiple-column PRIMARY KEY.
-+ UNI: the column is the first column of a UNIQUE index. 
-+ MUL: the column is the first column of a nonunique index in which multiple occurrences of a given value are permitted within the column.
-+ The "Default" field of the output indicates the default value that is assigned to the field. The "Extra" field contains any additional information that is available about a given field in that table. 
++ **Empty**: the column either is not indexed or is indexed only as a secondary column in a multiple-column, nonunique index.
++ **PRI**: the column is a PRIMARY KEY or is one of the columns in a multiple-column PRIMARY KEY.
++ **UNI**: the column is the first column of a UNIQUE index. 
++ **MUL**: the column is the first column of a nonunique index in which multiple occurrences of a given value are permitted within the column.
++ **Default**: the default value that is assigned to the field. The "Extra" field contains any additional information that is available about a given field in that table. 
 
 
 1. SHOW columns FROM dogs
-```
 <table>
     <tr>
         <th>Field</th>
@@ -215,6 +214,7 @@
 </table>
 
 2. DESCRIBE reviews
+
 <table>
     <tr>
         <th>Field</th>
