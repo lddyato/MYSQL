@@ -1,4 +1,4 @@
-<table><tr><td bgcolor=#000000>
+
 # Exercise 3: Formatting Selected Data
 
 ```python
@@ -165,4 +165,4 @@ FROM dogs
 ORDER BY breed 
 ```
 
-</td></tr></table>
+
