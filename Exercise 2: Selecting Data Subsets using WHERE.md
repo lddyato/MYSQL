@@ -100,6 +100,21 @@ SELECT dog_guid, created_at
 FROM complete_tests
 WHERE DAY(created_at) > 15
 
+# retrieve the Dog ID, subcategory_name, and test_name fields, in that order, 
+# of the first 10 reviews entered in the Reviews table to be submitted in 2014?
+SELECT dog_guid, subcategory_name, test_name
+FROM reviews
+WHERE YEAR(created_at)=2014
+LIMIT 10;
+
+
+# select the Dog ID, test name, and subcategory associated with each completed test 
+# for the first 100 tests entered in October, 2014?
+SELECT dog_guid, test_name, subcategory_name
+FROM complete_tests
+WHERE YEAR(created_at)="2014" and MONTH(created_at)=10
+LIMIT 100;
+
 # select all the Dog IDs and time stamps of completed tests from after February 4, 2014 
 # by treating date entries as text clauses 
 SELECT dog_guid, created_at
@@ -110,21 +125,6 @@ WHERE created_at > '2014-02-04'
 SELECT dog_guid, created_at
 FROM complete_tests
 WHERE created_at<'2015-10-15';
-
-# retrieve the Dog ID, subcategory_name, and test_name fields, in that order, 
-# of the first 10 reviews entered in the Reviews table to be submitted in 2014?
-SELECT dog_guid, subcategory_name, test_name
-FROM reviews
-WHERE YEAR(created_at)=2014
-LIMIT 10;
-
-
-# select the Dog ID, test name, and subcategory associated with each completed test for the first 100 tests 
-# entered in October, 2014?
-SELECT dog_guid, test_name, subcategory_name
-FROM complete_tests
-WHERE YEAR(created_at)="2014" and MONTH(created_at)=10
-LIMIT 100;
 ```
 
 ## step 5: IS NULL and IS NOT NULL
