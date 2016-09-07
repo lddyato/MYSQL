@@ -35,7 +35,8 @@ ORDER BY Month ASC, test_name ASC;
 ```
 It looks like in both of these cases, MySQL is likely populating the unaggregated column with the first value it finds in that column within the first "group" of rows it is examining.  
 
-*So how do we prevent this from happening?*  
+*So how do we prevent this from happening?*
+
 The only way to be sure how the MySQL database will summarize a set of data in a SELECT clause is to tell it how to do so with an aggregate function.
 
 ## 2. Errors due to Aggregation Mismatches
@@ -52,8 +53,8 @@ As a way to prevent these logical mismatches or error messages, you will often h
 The order of SQL queries is meant to reflect the way we write sentences, but in actuality they are actually executed in a different order than we write them. The cartoon below shows the order we write the queries being sent to the database at the top of the funnel, and the order the database usually executes the queries on the conveyer belt.
 <img src="https://duke.box.com/shared/static/irmwu5o8qcx4ctapjt5h0bs4nsrii1cl.jpg">
 
-* This diagram shows you that data are actually grouped before the SELECT expressions are applied. That means that when a GROUP BY expression is included in an SQL query, there is no way to use a SELECT statement to summarize data that cross multiple groups. The data will have already been separated by the time the SELECT statement is applied. The only way to get the information you want is to write two separate queries. This concept can be difficult to understand when you start using SQL for the first time after exclusively using Excel, but soon you will be come accustomed to it.
+* This diagram shows you that **data are actually grouped before the SELECT expressions are applied**. That means that when a GROUP BY expression is included in an SQL query, there is no way to use a SELECT statement to summarize data that cross multiple groups. The data will have already been separated by the time the SELECT statement is applied. The only way to get the information you want is to write two separate queries. This concept can be difficult to understand when you start using SQL for the first time after exclusively using Excel, but soon you will be come accustomed to it.
 * this diagram also shows you why some platforms and some queries in some platforms crash when you try to use aliases or derived fields in WHERE, GROUP BY, or HAVING clauses. 
-If the SELECT statement hasn't been run yet, the alias or derived fields won't be available (as a reminder, some database systems--like MySQL--have found ways to overcome this issue). 
-* On the other hand, SELECT is executed before ORDER BY clauses. That means most database systems should be able to use aliases and derived fields in ORDER BY clauses.
+**If the SELECT statement hasn't been run yet, the alias or derived fields won't be available** (as a reminder, some database systems--like MySQL--have found ways to overcome this issue). 
+* On the other hand, **SELECT is executed before ORDER BY clauses**. That means most database systems should be able to use aliases and derived fields in ORDER BY clauses.
 
