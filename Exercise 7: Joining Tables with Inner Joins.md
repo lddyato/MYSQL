@@ -1,6 +1,6 @@
 #  Joining Tables with Inner Joins
 
-* inner joins only output the data from rows that have equivalent values in both tables being joined. 
+**Inner joins only output the data from rows that have equivalent values in both tables being joined.**
 ```python
 
 %load_ext sql
@@ -52,6 +52,35 @@ LIMIT 200
 ### Note:
 If you accidentally request a Cartesian product from datasets with billions of rows, you could be waiting for your query output for days (and will probably get in trouble with your database administrator). So **always remember to tell the database how to join your tables!**
 ```sql
+# How many unique dog_guids and user_guids are there in the reviews and dogs table independently?
+SELECT COUNT(DISTINCT dog_guid)  FROM dogs     # 35050 rows
+SELECT COUNT(DISTINCT user_guid) FROM dogs     # 30967 rows
+SELECT COUNT(DISTINCT dog_guid)  FROM reviews  # 5991 rows
+SELECT COUNT(DISTINCT user_guid) FROM reviews  # 5586 rows
+```
+These counts indicate some important things:
+* Many customers in both the reviews and the dogs table have multiple dogs
+* There are many more unique dog_guids and user_guids in the dogs table than the reviews table
+* There are many more unique dog_guids and user_guids in the reviews table than in the output of our inner join
+```sql
+SELECT COUNT(DISTINCT d.user_guid) AS numusers
+FROM dogs d, reviews r
+WHERE d.dog_guid=r.dog_guid                               # 389 rows
+# or
+SELECT COUNT(DISTINCT d.user_guid) AS numusers
+FROM dogs d, reviews r
+WHERE d.user_guid=r.user_guid                             # 5586 rows
+# or
+SELECT COUNT(DISTINCT d.user_guid) AS numusers
+FROM dogs d, reviews r
+WHERE d.user_guid=r.user_guid AND d.dog_guid=r.dog_guid   # 389 rows
+```
+These counts indicate:
+* All of the user_guids in the reviews table are in the dogs table
+* Only 389 of the over 5000 dog_guids in the reviews table are in the dogs table
+* **inner joins only output the data from rows that have equivalent values in both tables being joined**
+
+```sql
 # extract the user_guid, dog_guid, breed, breed_type, and breed_group for all animals who completed the "Yawn Warm-up" game
 SELECT d.user_guid AS UserID, d.dog_guid AS DogID, d.breed, d.breed_type, d.breed_group
 FROM dogs d, complete_tests c
@@ -99,7 +128,11 @@ FROM dogs d, users u
 WHERE d.user_guid=u.user_guid
   AND u.state="NC"
   AND d.breed="golden retriever"
-ORDER BY numdogs DESC;
+# or
+SELECT COUNT(DISTINCT d.dog_guid) AS numdogs, d.user_guid AS UserID, d.breed, u.state
+FROM dogs d, users u
+WHERE d.user_guid=u.user_guid
+  AND d.breed="golden retriever"
 GROUP BY state
 HAVING state="NC";
 
@@ -112,7 +145,7 @@ GROUP BY u.membership_type;
 # For which 3 dog breeds do we have the greatest amount of site_activity data, (as defined by non-NULL values in script_detail_id)
 SELECT COUNT(s.script_detail_id) AS numid, d.breed
 FROM dogs d, site_activities s
-WHERE d.dog_guid=s.dog_guid AND d.user_guid=s.user_guid AND s.script_detail_di IS NOT NULL
+WHERE d.dog_guid=s.dog_guid AND d.user_guid=s.user_guid AND s.script_detail_id IS NOT NULL
 GROUP BY d.breed
 ORDER BY numid DESC;
 ```
