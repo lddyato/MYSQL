@@ -51,11 +51,12 @@ LIMIT 200
 ```
 ### Note:
 If you accidentally request a Cartesian product from datasets with billions of rows, you could be waiting for your query output for days (and will probably get in trouble with your database administrator). So **always remember to tell the database how to join your tables!**
-
+```sql
 # extract the user_guid, dog_guid, breed, breed_type, and breed_group for all animals who completed the "Yawn Warm-up" game
 SELECT d.user_guid AS UserID, d.dog_guid AS DogID, d.breed, d.breed_type, d.breed_group
 FROM dogs d, complete_tests c
 WHERE d.dog_guid=c.dog_guid AND test_name='Yawn Warm-up';
+```
 
 ## step 2: Joining More than 2 Tables
 * list all the fields you want to extract in the SELECT statement, 
@@ -83,6 +84,7 @@ WHERE d.dog_guid=c.dog_guid
 ### Note
 Joins are very resource intensive, so try not to join unnecessarily. In general, the more joins you have to execute, the slower your query performance will be.
 
+## Examples
 ```sql
 # extract the user_guid, membership_type, and dog_guid of all the golden retrievers who completed at least 1 Dognition test
 SELECT DISTINCT d.user_guid AS UserID, u.membership_type, d.dog_guid AS DogID, d.breed
