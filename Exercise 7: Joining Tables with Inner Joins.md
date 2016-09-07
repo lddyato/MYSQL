@@ -1,5 +1,6 @@
 #  Joining Tables with Inner Joins
 
+* inner joins only output the data from rows that have equivalent values in both tables being joined. 
 ```python
 
 %load_ext sql
@@ -37,6 +38,7 @@ GROUP BY d.user_guid
 HAVING NumRatings >= 10
 ORDER BY AvgRating DESC
 LIMIT 200
+
 # OR to be very careful and exclude any incorrect dog_guid or user_guid entries, you can include both shared columns in the WHERE clause:
 SELECT d.dog_guid AS DogID, d.user_guid AS UserID, AVG(r.rating) AS AvgRating, 
        COUNT(r.rating) AS NumRatings, d.breed, d.breed_group, d.breed_type
@@ -50,3 +52,65 @@ LIMIT 200
 ### Note:
 If you accidentally request a Cartesian product from datasets with billions of rows, you could be waiting for your query output for days (and will probably get in trouble with your database administrator). So **always remember to tell the database how to join your tables!**
 
+# extract the user_guid, dog_guid, breed, breed_type, and breed_group for all animals who completed the "Yawn Warm-up" game
+SELECT d.user_guid AS UserID, d.dog_guid AS DogID, d.breed, d.breed_type, d.breed_group
+FROM dogs d, complete_tests c
+WHERE d.dog_guid=c.dog_guid AND test_name='Yawn Warm-up';
+
+## step 2: Joining More than 2 Tables
+* list all the fields you want to extract in the SELECT statement, 
+* specify which table they came from in the SELECT statement, 
+* list all the tables from which you will need to extract the fields in the FROM statement, 
+* and then tell the database how to connect the tables in the WHERE statement.
+
+```sql
+# Extract the user_guid, user's state of residence, user's zip code, dog_guid, breed, breed_type, 
+# and breed_group for all animals who completed the "Yawn Warm-up" game
+SELECT c.user_guid AS UserID, u.state, u.zip, d.dog_guid AS DogID, d.breed, d.breed_type, d.breed_group
+FROM dogs d, complete_tests c, users u
+WHERE d.dog_guid=c.dog_guid 
+   AND c.user_guid=u.user_guid
+   AND c.test_name="Yawn Warm-up";
+# This query focuses the relationships primarily on the complete_tests table. However, it turns out that our Dognition dataset 
+# has only NULL values in the user_guid column of the complete_tests table.
+#  If you were to execute the query above, you would not get an error message, but your output would have 0 rows
+SELECT d.user_guid AS UserID, u.state, u.zip, d.dog_guid AS DogID, d.breed, d.breed_type, d.breed_group
+FROM dogs d, complete_tests c, users u
+WHERE d.dog_guid=c.dog_guid 
+   AND d.user_guid=u.user_guid
+   AND c.test_name="Yawn Warm-up";
+```
+### Note
+Joins are very resource intensive, so try not to join unnecessarily. In general, the more joins you have to execute, the slower your query performance will be.
+
+```sql
+# extract the user_guid, membership_type, and dog_guid of all the golden retrievers who completed at least 1 Dognition test
+SELECT DISTINCT d.user_guid AS UserID, u.membership_type, d.dog_guid AS DogID, d.breed
+FROM dogs d, complete_tests c, users u
+WHERE d.dog_guid=c.dog_guid
+  AND d.user_guid=u.user_guid
+  AND d.breed="golden retriever";
+
+#  How many unique Golden Retrievers who live in North Carolina are there in the Dognition database?
+SELECT COUNT(DISTINCT d.dog_guid) AS numdogs, d.user_guid AS UserID, d.breed, u.state
+FROM dogs d, users u
+WHERE d.user_guid=u.user_guid
+  AND u.state="NC"
+  AND d.breed="golden retriever"
+ORDER BY numdogs DESC;
+GROUP BY state
+HAVING state="NC";
+
+# How many unique customers within each membership type provided reviews?
+SELECT COUNT(DISTINCT u.user_guid) AS numUser, u.membership_type
+FROM reviews r, users u
+WHERE u.user_guid=r.user_guid AND r.rating IS NOT NULL
+GROUP BY u.membership_type;
+
+# For which 3 dog breeds do we have the greatest amount of site_activity data, (as defined by non-NULL values in script_detail_id)
+SELECT COUNT(s.script_detail_id) AS numid, d.breed
+FROM dogs d, site_activities s
+WHERE d.dog_guid=s.dog_guid AND d.user_guid=s.user_guid AND s.script_detail_di IS NOT NULL
+GROUP BY d.breed
+ORDER BY numid DESC;
+```
