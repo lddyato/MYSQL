@@ -22,8 +22,8 @@ SHOW tables
 
 ## step 3: show how many columns in table
 ```sql
-SHOW columns FROM (enter table name here)
-SHOW columns FROM (enter table name here) FROM (enter database name here)
+SHOW columns FROM tablename
+SHOW columns FROM tablename FROM databasename
 SHOW columns FROM databasename.tablename  
 #Whenever you have multiple databases loaded, you will need to specify which database a table comes from using one of the syntax options described above.
 SHOW columns FROM dogs
@@ -33,12 +33,24 @@ DESCRIBE exam_answers
 DESCRIBE site_activities
 DESCRIBE users
 ```
-+ **Empty**: the column either is not indexed or is indexed only as a secondary column in a multiple-column, nonunique index.
-+ **PRI**: the column is a PRIMARY KEY or is one of the columns in a multiple-column PRIMARY KEY.
-+ **UNI**: the column is the first column of a UNIQUE index. 
-+ **MUL**: the column is the first column of a nonunique index in which multiple occurrences of a given value are permitted within the column.
-+ **Default**: the default value that is assigned to the field. The "Extra" field contains any additional information that is available about a given field in that table. 
-
+* **Field**: indicates the column name.
+* **Type**: indicates the column data type.
+* **Collation**: indicates the collation for nonbinary string columns, or NULL for other columns. This value is displayed only if you use the **FULL** keyword.
+* **Null**: contains YES if NULL values can be stored in the column, NO if not.
+* **Key**: indicates whether the column is indexed:
+ + If Key is **empty**, the column either is not indexed or is indexed only as a secondary column in a multiple-column, nonunique index.
+ + If Key is **PRI**, the column is a PRIMARY KEY or is one of the columns in a multiple-column PRIMARY KEY.
+ + If Key is **UNI**, the column is the first column of a UNIQUE index. (A UNIQUE index permits multiple NULL values, but you can tell whether the column permits NULL by checking the Null field.)
+ + If Key is **MUL**, the column is the first column of a nonunique index in which multiple occurrences of a given value are permitted within the column.
+ + If more than one of the Key values applies to a given column of a table, Key displays the one with the highest priority, in the order **PRI > UNI > MUL**.
+* **UNIQUE**: may be displayed as PRI if it cannot contain NULL values and there is no PRIMARY KEY in the table. A UNIQUE index may display as MUL if several columns form a composite UNIQUE index; although the combination of the columns is unique, each column can still hold multiple occurrences of a given value.
+* **Default**: indicates the default value that is assigned to the column. This is NULL if the column has an explicit default of NULL, or if the column definition has no DEFAULT clause.
+* **Extra**: contains any additional information that is available about a given column. The value is nonempty in these cases:
+ + auto_increment for columns that have the AUTO_INCREMENT attribute
+ + on update CURRENT_TIMESTAMP for TIMESTAMP or DATETIME columns that have the ON UPDATE CURRENT_TIMESTAMP attribute
+ + VIRTUAL GENERATED or VIRTUAL STORED for generated column
+* **Privileges**: indicates the privileges you have for the column. This value is displayed only if you use the FULL keyword.
+* **Comment**: indicates any comment the column has. This value is displayed only if you use the FULL keyword.
 
 **Table 1: dogs**
 <table>
