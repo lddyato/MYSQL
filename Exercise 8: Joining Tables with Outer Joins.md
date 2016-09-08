@@ -130,6 +130,7 @@ WHERE user_guid='ce225842-7144-11e5-ba71-058fbc01cf0b';
 |COUNT(*)|
 |------|
 |26|
+since there were multiple rows that had the same user_guid in the users table, **each one of these rows got paired up with each row in the dogs table that had the same user_guid.** The result was 442 rows, because 17 (instances of the user_guid in the users table) x 26 (instances of the user_guid in the dogs table) = 442.
 
 The important things I want you to remember from this example of joins with duplicates are that duplicate rows and table relationships that have table-to-table mappings of greater than 1 have multiplicative effects on your query results, due to the way relational databases combine tables. If you write queries that aggregate over a lot of joined tables, it can be very difficult to catch issues that output results you don't intend, because the aggregated results will hide clues from you. To prevent this from happening, I recommend you adopt the following practices:
 * Avoid making assumptions about your data or your analyses. For example, rather than assume that all the values in a column are unique just because some documentation says they should be, check for yourself!
@@ -157,9 +158,10 @@ ORDER BY AvgRating DESC;
 ## Examples
 **Question 10:** How would you write a query that used a left join to return the number of distinct user_guids that were in the users table, but not the dogs table (your query should return a value of 2226)?
 ```sql
-SELECT COUNT (*) 
+SELECT COUNT(DISTINCT u.user_guid) 
 FROM users u LEFT JOIN dogs d
-  ON u.user_guid=d.user_guid; 
+  ON u.user_guid=d.user_guid
+WHERE d.user_guid IS NULL;
 ```
 
 |COUNT(DISTINCT u.user_guid)|
@@ -169,10 +171,10 @@ FROM users u LEFT JOIN dogs d
 
 **Question 11:** How would you write a query that used a right join to return the number of distinct user_guids that were in the users table, but not the dogs table (your query should return a value of 2226)?
 ```sql
-users table, but not the dogs table (your query should return a value of 2226)?
-SELECT COUNT (*) 
+SELECT COUNT(DISTINCT u.user_guid) 
 FROM dogs d RIGHT JOIN users u
-  ON u.user_guid=d.user_guid; 
+  ON u.user_guid=d.user_guid
+WHERE d.user_guid IS NULL;
 ```
  
 |COUNT(DISTINCT u.user_guid)|
@@ -181,9 +183,34 @@ FROM dogs d RIGHT JOIN users u
 
 **Question 12:** Use a left join to create a list of all the unique dog_guids that are contained in the site_activities table, but not the dogs table, and how many times each one is entered. Note that there are a lot of NULL values in the dog_guid of the site_activities table, so you will want to exclude them from your list. (Hint: if you exclude null values, the results you get will have two rows with words in their site_activities dog_guid fields instead of real guids, due to mistaken entries)
 ```sql
-SELECT DISTINCT s.dog_guid, COUNT(s.dog_guid) AS snumdogs
+SELECT s.dog_guid, COUNT(*) AS snumdogs
 FROM site_activities s LEFT JOIN dogs d
-  ON s.dog_guid=d.dog_guid; 
-WHERE d.dog_guid IS NULL AND s.dog_guid IS NOT NLL
-GROUP BY snumdogs
+  ON s.dog_guid=d.dog_guid
+WHERE d.dog_guid IS NULL AND s.dog_guid IS NOT NULL
+GROUP BY s.dog_guid;
 ```
+|dog_guid	|snumdogs|
+|---------|--------|
+|Membership	|5587|
+|PortalContent	|12|
+If delete the "GROUP BY snumdogs", then the output turns out to be
+```sql
+SELECT s.dog_guid, COUNT(*) AS snumdogs
+FROM site_activities s LEFT JOIN dogs d
+  ON s.dog_guid=d.dog_guid
+WHERE d.dog_guid IS NULL AND s.dog_guid IS NOT NULL;
+```
+dog_guid|	snumdogs
+-----|----
+Membership|	5599
+
+
+
+
+```sql
+SELECT COUNT(DISTINCT dog_guid)
+FROM site_activities;
+```
+|COUNT(DISTINCT dog_guid)|
+|----|
+|25234|
