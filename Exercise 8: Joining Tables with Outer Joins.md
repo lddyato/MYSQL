@@ -54,6 +54,38 @@ WHERE d.dog_guid IS NULL
 GROUP BY r.dog_guid
 HAVING NumRatings >= 10
 ORDER BY AvgRating DESC;
+
+# How would you use a left join to retrieve a list of all the unique dogs in the dogs table, and retrieve a count of how many 
+# tests each one completed? Include the dog_guids and user_guids from the dogs and complete_tests tables in your output.
+SELECT DISTINCT d.dog_guid AS dDogID, d.user_guid AS dUserID, 
+c.user_guid AS cUserID, c.dog_guid AS cDogID, COUNT(test_name) AS numtests
+FROM dogs d LEFT JOIN complete_tests c
+  ON d.dog_guid=c.dog_guid AND d.user_guid=c.user_guid
+GROUP BY d.dog_guid;                                     # 35050 rows
+
+#  Repeat the query in the above question, but intentionally use the dog_guids from the completed_tests table 
+# to group your results instead of the dog_guids from the dogs table.
+SELECT DISTINCT d.dog_guid AS numDogs, d.user_guid AS dUserID, 
+c.dog_guid AS cDogID, c.user_guid AS cUserID, COUNT(test_name) AS numtests
+FROM dogs d LEFT JOIN complete_tests c
+  ON d.dog_guid=c.dog_guid AND d.user_guid=c.user_guid
+GROUP BY c.dog_guid;                           
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 
 
