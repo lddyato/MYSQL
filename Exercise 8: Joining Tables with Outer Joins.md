@@ -68,10 +68,12 @@ GROUP BY d.dog_guid;                                     # 35050 rows
 SELECT d.dog_guid AS dDogID, d.user_guid AS dUserID, 
 c.dog_guid AS cDogID, c.user_guid AS cUserID, COUNT(test_name) AS numtests
 FROM dogs d LEFT JOIN complete_tests c
-  ON d.dog_guid=c.dog_guid AND d.user_guid=c.user_guid
+  ON d.dog_guid=c.dog_guid 
 GROUP BY c.dog_guid;                                     # 17987 rows
+#"AND d.user_guid=c.user_guid" should be deleted in ON clause, or 
+# the output is 1 row, maybe because of the data problem in the c table
 ```
-This time your query ran successfully, but you retrieved many fewer DogIDs because the GROUP BY clause grouped your results according to the dog_guids in the completed_tests table rather than the dog_guid table. As a result, even though you implemented your join correctly, all of the dog_guids that were in the dogs table but not in the completed_tests table got rolled up into one row of your output where completed_tests.dogs_guid = NULL. This is a good opportunity to remind ourselves about the differences between SELECT/GROUP BY and COUNT DISTINCT.
+This time your query ran successfully, but you retrieved many fewer DogIDs because the GROUP BY clause grouped your results according to the dog_guids in the completed_tests table rather than the dog_guid table. As a result, even though you implemented your join correctly, **all of the dog_guids that were in the dogs table but not in the completed_tests table got rolled up into one row of your output where completed_tests.dogs_guid = NULL**. This is a good opportunity to remind ourselves about the differences between SELECT/GROUP BY and COUNT DISTINCT.
 
 ```sql
 # Write a query using COUNT DISTINCT to determine how many distinct dog_guids there are in the completed_tests table.
@@ -95,24 +97,40 @@ FROM users u LEFT JOIN dogs d
 # Sort the results by this count in descending order. 
 # Remember that if you include dog_guid or breed fields in this query, 
 # they will be randomly populated by only one of the values associated with a user_guid.
-SELECT d.breed, d.dog_guid AS dDogID, d.user_guid AS dUserID, u.user_guid AS uUserID, COUNT * AS numrows
+SELECT d.breed, d.dog_guid AS dDogID, d.user_guid AS dUserID, 
+  u.user_guid AS uUserID, COUNT(*) AS numrows
 FROM users u LEFT JOIN dogs d
   ON u.user_guid=d.user_guid
 GROUP BY uUserID
 ORDER BY numrows DESC;                # 33,193 rows
-
+```
+breed	|dDogID	|dUserID|	uUserID|	numrows
+|-----|--------|------|-------|
+Shih Tzu|	fd7bfb52-7144-11e5-ba71-058fbc01cf0b|	ce7b75bc-7144-11e5-ba71-058fbc01cf0b|	ce7b75bc-7144-11e5-ba71-058fbc01cf0b|	913138
+Shih Tzu|	fd423714-7144-11e5-ba71-058fbc01cf0b|	ce225842-7144-11e5-ba71-058fbc01cf0b|	ce225842-7144-11e5-ba71-058fbc01cf0b|	442
+Shih Tzu|	fd40bd62-7144-11e5-ba71-058fbc01cf0b|	ce2258a6-7144-11e5-ba71-058fbc01cf0b|	ce2258a6-7144-11e5-ba71-058fbc01cf0b|	320
+This query told us that user 'ce7b75bc-7144-11e5-ba71-058fbc01cf0b' would be associated with 913,138 rows in the output of the outer join we designed!    
+We are going to work with the second user_guid in the output you just generated, 'ce225842-7144-11e5-ba71-058fbc01cf0b', because it would be associated with 442 output rows, and 442 rows are much easier to work with than 913,138.
+```sql
 # How many rows in the users table are associated with user_guid 'ce225842-7144-11e5-ba71-058fbc01cf0b'?
-SELECT COUNT(user_duid)
+SELECT COUNT(user_guid)
 FROM users 
-WHERE uUserID="ce225842-7144-11e5-ba71-058fbc01cf0b";   # 17 rows are exact duplicates of each other
-
+WHERE user_guid="ce225842-7144-11e5-ba71-058fbc01cf0b";   # 17 rows are exact duplicates of each other
+```
+|COUNT(user_guid)|
+|----|
+|17|
+```sql
 #  Examine all the rows in the dogs table that are associated with user_guid 'ce225842-7144-11e5-ba71-058fbc01cf0b'?
 SELECT COUNT(*)
 FROM dogs
-WHERE user_guid='ce225842-7144-11e5-ba71-058fbc01cf0b';  # 26 rows with many entries that have "Shih Tzu" in breed and "190" in  weight.
-
-
+WHERE user_guid='ce225842-7144-11e5-ba71-058fbc01cf0b';  
+# 26 rows with many entries that have "Shih Tzu" in breed and "190" in  weight.
 ```
+|COUNT(*)|
+|------|
+|26|
+
 The important things I want you to remember from this example of joins with duplicates are that duplicate rows and table relationships that have table-to-table mappings of greater than 1 have multiplicative effects on your query results, due to the way relational databases combine tables. If you write queries that aggregate over a lot of joined tables, it can be very difficult to catch issues that output results you don't intend, because the aggregated results will hide clues from you. To prevent this from happening, I recommend you adopt the following practices:
 * Avoid making assumptions about your data or your analyses. For example, rather than assume that all the values in a column are unique just because some documentation says they should be, check for yourself!
 * Always look at example outputs of your queries before you strongly interpret aggregate calculations. Take extra care to do this when your queries require joins.
