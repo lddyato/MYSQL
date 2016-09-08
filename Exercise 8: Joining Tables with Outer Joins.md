@@ -65,7 +65,7 @@ GROUP BY d.dog_guid;                                     # 35050 rows
 
 #  Repeat the query in the above question, but intentionally use the dog_guids from the completed_tests table 
 # to group your results instead of the dog_guids from the dogs table.
-SELECT d.dog_guid AS numDogs, d.user_guid AS dUserID, 
+SELECT d.dog_guid AS dDogID, d.user_guid AS dUserID, 
 c.dog_guid AS cDogID, c.user_guid AS cUserID, COUNT(test_name) AS numtests
 FROM dogs d LEFT JOIN complete_tests c
   ON d.dog_guid=c.dog_guid AND d.user_guid=c.user_guid
