@@ -136,7 +136,36 @@ ORDER BY AvgRating DESC;
 * If you wanted to imitate a full outer join in mySQL, you could follow one of the methods described at this website:
 <http://www.xaprb.com/blog/2006/05/26/how-to-write-full-outer-join-in-mysql/>
 
+```sql
+# Question 10: How would you write a query that used a left join to return the number of distinct user_guids that were in the users table, but not the dogs table (your query should return a value of 2226)?
+SELECT COUNT (*) 
+FROM users u LEFT JOIN dogs d
+  ON u.user_guid=d.user_guid; 
+```
 
+|COUNT(DISTINCT u.user_guid)|
+|----|
+|2226|
+ 
 
+Question 11: How would you write a query that used a right join to return the number of distinct user_guids that were in the users table, but not the dogs table (your query should return a value of 2226)?
+```sql
+users table, but not the dogs table (your query should return a value of 2226)?
+SELECT COUNT (*) 
+FROM dogs d RIGHT JOIN users u
+  ON u.user_guid=d.user_guid; 
+```
+ 
+|COUNT(DISTINCT u.user_guid)|
+|----|
+|2226|
 
+Question 12: Use a left join to create a list of all the unique dog_guids that are contained in the site_activities table, but not the dogs table, and how many times each one is entered. Note that there are a lot of NULL values in the dog_guid of the site_activities table, so you will want to exclude them from your list. (Hint: if you exclude null values, the results you get will have two rows with words in their site_activities dog_guid fields instead of real guids, due to mistaken entries)
+```sql
+SELECT DISTINCT s.dog_guid, COUNT(s.dog_guid) AS snumdogs
+FROM site_activities s LEFT JOIN dogs d
+  ON s.dog_guid=d.dog_guid; 
+WHERE d.dog_guid IS NULL AND s.dog_guid IS NOT NLL
+GROUP BY snumdogs
+```
 
