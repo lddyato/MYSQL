@@ -685,6 +685,31 @@ DESCRIBE users
 + The semi-colon at the end of a query is only required when you have multiple separate queries saved in the same text file or editor. 
 
 ## step 4 Using SELECT to look at your raw data
+Let’s take look into the syntax of the SELECT statement:
+```sql
+SELECT 
+    column_1, column_2, ...
+FROM
+    table_1
+[INNER | LEFT |RIGHT] JOIN table_2 ON conditions
+WHERE
+    conditions
+GROUP BY column_1
+HAVING group_conditions
+ORDER BY column_1
+LIMIT offset, length;
+```
+The SELECT statement consists of several clauses as explained in the following list:
+
+* **SELECT** followed by a list of comma-separated columns or an asterisk (*) to indicate that you want to return all columns.
+* **FROM** specifies the table or view where you want to query the data.
+* **JOIN** gets data from other tables based on certain join conditions.
+* **WHERE** filters rows in the result set.
+* **GROUP BY** groups a set of rows into groups and applies aggregate functions on each group.
+* **HAVING** filters group based on groups defined by GROUP BY clause.
+* **ORDER BY** specifies a list of columns for sorting.
+* **LIMIT** constrains the number of returned rows.
+
 ```sql
 SELECT breed FROM dogs;
 ```
