@@ -1,12 +1,16 @@
+Summary
+<img src="http://www.2cto.com/uploadfile/2015/0619/20150619014716458.png">
+<img src="http://www.2cto.com/uploadfile/2015/0619/20150619014856564.png">
+<img src="http://www.2cto.com/uploadfile/2015/0619/20150619014927482.png">
+<img src="http://www.2cto.com/uploadfile/2015/0619/20150619014959826.png">
 
 
-
-<img src="http://www.2cto.com/uploadfile/2015/0618/20150618022140928.png">
 
 关系数据库模型是DBMS软件组成部分的基础。DBMS软件包用于实现目前大多数的操作型和分析型数据库。
 关系DBMS软件包括Oracle、MySQL、Microsoft SQL Server、PostgreSQL、IBM DB2以及Teradata。
 在这些DBMS工具中，Teradata适用于大型分析型数据库，其他的DBMS可同时用于操作型数据库和分析型数据库。
 
+<img src="http://www.2cto.com/uploadfile/2015/0618/20150618022140928.png">
 
 ## ER 建模基本构建
 ER建模后得到的ER图（ER diagram，ERD）是整个数据库的蓝图。实体(entity)和联系(relationship)是ER图的两个基本构件。目前还没有一个所有数据库都遵循的通用ER符号体系。相反，当前采用的ER符号体系种类繁多。虽然采用来自不同符号体系的ER符号来表示实体和联系时差异巨大，但其含义通常是相同的。
@@ -607,9 +611,10 @@ MG (Manufacturing Guru) 公司想要记录它的供应商、零部件和产品�
 在实际中，三元联系比较少见，度大于3的联系更为少见。在多数情况下，当设计者试图创建度大于2的联系时，往往会尝试创建额外的实体而非联系。
 
 
-
-
-
+# Example
+<img src="http://www.2cto.com/uploadfile/2015/0619/20150619015200195.png">
+<img src="http://www.2cto.com/uploadfile/2015/0619/20150619015223788.png">
+<img src="http://www.2cto.com/uploadfile/2015/0619/20150619015247395.png">
 
 
 
