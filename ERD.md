@@ -1,9 +1,8 @@
-Summary
+# Summary
 <img src="http://www.2cto.com/uploadfile/2015/0619/20150619014716458.png">
 <img src="http://www.2cto.com/uploadfile/2015/0619/20150619014856564.png">
 <img src="http://www.2cto.com/uploadfile/2015/0619/20150619014927482.png">
 <img src="http://www.2cto.com/uploadfile/2015/0619/20150619014959826.png">
-
 
 
 关系数据库模型是DBMS软件组成部分的基础。DBMS软件包用于实现目前大多数的操作型和分析型数据库。
@@ -35,7 +34,7 @@ ER图中每个实体必须通过联系至少与一个其他实体相关联。在
 ## 基数约束 Cardinality Constraint
 ER图中，在实体与联系的连线上往往写有一些符号，这些符号就是基数约束（cardinality constraint）。基数约束用于表示该实体可以有多少实例与另一实体的实例存在联系。考虑图2-3中的ER图，菱形“ReportsTo”表示实体EMPLOYEE和实体DEPARTMENT之间的联系。而表示基数约束的符号则常常写于实体和联系之间靠近实体一端的连线上。
 
-<img src="http://www.2cto.com/uploadfile/2015/0618/20150618035234234.pnghttp://www.2cto.com/uploadfile/2015/0618/20150618035234234.png">
+<img src="http://www.2cto.com/uploadfile/2015/0618/20150618035234234.png">
 
 每个基数约束包含以下两个部分：
 * 最大基数（maximum cardinality）——靠近实体一端的基数约束部分；
