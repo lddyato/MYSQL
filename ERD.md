@@ -1,4 +1,3 @@
-[TOC]
 
 # Summary
 <img src="http://www.2cto.com/uploadfile/2015/0619/20150619014716458.png">
